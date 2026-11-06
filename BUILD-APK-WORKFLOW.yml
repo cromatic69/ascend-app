@@ -1,0 +1,54 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install Android tools
+        uses: android-actions/setup-android@v3
+
+      - name: Install app tools
+        run: npm install
+
+      - name: Add Android if missing
+        run: |
+          if [ ! -d android ]; then npx cap add android; fi
+
+      - name: Add the Ascend icon and splash screen
+        run: |
+          pip install pillow
+          python3 tools/apply_branding.py
+
+      - name: Copy the app into Android
+        run: npx cap sync android
+
+      - name: Build the APK
+        run: |
+          chmod +x android/gradlew
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Save the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ascend-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk

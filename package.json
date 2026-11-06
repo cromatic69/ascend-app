@@ -1,0 +1,18 @@
+{
+  "name": "ascend-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ascend: gamified workouts, quests and discipline",
+  "scripts": {
+    "sync": "cap sync android",
+    "open": "cap open android",
+    "apk": "cap sync android && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/core": "^8.6.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.0"
+  }
+}
