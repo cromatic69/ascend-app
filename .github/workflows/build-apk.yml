@@ -23,8 +23,15 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Install Android tools
-        uses: android-actions/setup-android@v3
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare Android tools
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" || true
 
       - name: Install app tools
         run: npm install
@@ -34,9 +41,10 @@ jobs:
           if [ ! -d android ]; then npx cap add android; fi
 
       - name: Add the Ascend icon and splash screen
+        continue-on-error: true
         run: |
-          pip install pillow
-          python3 tools/apply_branding.py
+          python -m pip install pillow
+          python tools/apply_branding.py
 
       - name: Copy the app into Android
         run: npx cap sync android
@@ -45,7 +53,7 @@ jobs:
         run: |
           chmod +x android/gradlew
           cd android
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Save the APK
         uses: actions/upload-artifact@v4
