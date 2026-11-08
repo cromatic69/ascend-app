@@ -46,10 +46,43 @@ jobs:
           python -m pip install pillow
           python tools/apply_branding.py
 
+      - name: Set version number and signing key
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          python - <<'PY'
+          import os, shutil
+          p = 'android/app/build.gradle'
+          s = open(p).read()
+          s = s.replace('versionCode 1', 'versionCode ' + os.environ['RUN_NUMBER'], 1)
+          if os.path.exists('ascend.p12') and os.environ.get('KEYSTORE_PASSWORD'):
+              shutil.copy('ascend.p12', 'android/app/ascend.p12')
+              block = (
+                  "    signingConfigs {\n"
+                  "        ascend {\n"
+                  "            storeFile file('ascend.p12')\n"
+                  "            storePassword System.getenv('KEYSTORE_PASSWORD')\n"
+                  "            keyAlias 'ascend'\n"
+                  "            keyPassword System.getenv('KEYSTORE_PASSWORD')\n"
+                  "            storeType 'pkcs12'\n"
+                  "        }\n"
+                  "    }\n"
+              )
+              s = s.replace('android {\n', 'android {\n' + block, 1)
+              s = s.replace('buildTypes {\n', 'buildTypes {\n        debug {\n            signingConfig signingConfigs.ascend\n        }\n', 1)
+              print('Signing with the Ascend key')
+          else:
+              print('No signing key found, using the default key')
+          open(p, 'w').write(s)
+          PY
+
       - name: Copy the app into Android
         run: npx cap sync android
 
       - name: Build the APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
           chmod +x android/gradlew
           cd android
