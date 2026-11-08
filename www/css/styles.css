@@ -168,3 +168,13 @@ body.hm{--bg:#060912;--card:rgba(13,20,38,.82);--line:#2a2f55;--tx:#eaf1ff;--mu:
 .pok{display:block;width:100%;margin-top:14px;padding:13px;border:1px solid #7a6cff;background:rgba(30,24,90,.6);color:#fff;font-family:Georgia,"Times New Roman",serif;font-size:16px;letter-spacing:.06em;cursor:pointer;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,14px 100%,0 50%)}
 .tt{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:80;padding:10px 20px;border:1px solid #7a6cff;background:rgba(10,12,34,.95);color:#fff;font-family:var(--fd);letter-spacing:.06em;pointer-events:none;animation:ttx 2.7s both}
 @keyframes ttx{0%{opacity:0;margin-top:-10px}10%,85%{opacity:1;margin-top:0}100%{opacity:0}}
+
+/* Accounts */
+.acc{display:flex;gap:12px;align-items:center}
+.av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-weight:700;font-size:22px;color:#04101c;flex:none}
+.avs{display:flex;gap:8px;margin:10px 0}
+.avd{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0}
+.avd.on{border-color:#fff;box-shadow:0 0 0 2px var(--ac)}
+.fl2{display:block;margin:10px 0}.fl2 span{display:block;font-size:12px;letter-spacing:.08em;color:#a9a0c8;margin-bottom:4px}
+.fl2 input,input[type=password]{width:100%;padding:12px;border-radius:10px;font-size:16px;border:1px solid var(--line);background:var(--card);color:var(--tx)}
+.be{color:#ff7a8c;min-height:1.2em;font-size:13px;margin:6px 0}
