@@ -178,3 +178,17 @@ body.hm{--bg:#060912;--card:rgba(13,20,38,.82);--line:#2a2f55;--tx:#eaf1ff;--mu:
 .fl2{display:block;margin:10px 0}.fl2 span{display:block;font-size:12px;letter-spacing:.08em;color:#a9a0c8;margin-bottom:4px}
 .fl2 input,input[type=password]{width:100%;padding:12px;border-radius:10px;font-size:16px;border:1px solid var(--line);background:var(--card);color:var(--tx)}
 .be{color:#ff7a8c;min-height:1.2em;font-size:13px;margin:6px 0}
+
+/* Training log and boss */
+.stp{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0}
+.stp button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:24px;cursor:pointer}
+.stp span{min-width:130px}.stp b{font-size:28px;font-family:var(--fd)}
+.bh{display:flex;gap:12px;align-items:center}.bh svg{width:52px;height:52px;flex:none}
+
+/* Recovery, calendar, backup */
+.rdy{display:flex;align-items:baseline;gap:8px}.rdy b{font-size:44px;font-family:var(--fd)}
+.mm{display:flex;gap:14px;align-items:center}.mm svg{width:110px;flex:none}.mm>div{flex:1}
+.hyb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal span{font-size:10px;text-align:center;color:var(--mu)}
+.cal i{display:block;aspect-ratio:1;border-radius:6px;background:var(--bar)}.cal i.w1{background:color-mix(in srgb,var(--ac) 45%,var(--bar))}.cal i.w2{background:var(--gr)}.cal i.td{outline:2px solid var(--ac)}
+textarea{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;font-family:inherit}
